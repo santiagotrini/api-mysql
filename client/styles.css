@@ -13,3 +13,13 @@ table, th, td {
   text-align: center;
   border-collapse: collapse;
 }
+
+td button {
+  margin-right: 5px;
+}
+
+form {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}

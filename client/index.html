@@ -3,11 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>El cliente</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <h1>Soy el cliente</h1>
+  <form onsubmit="handleSubmit(event)">
+    <input type="text" name="name" placeholder="Nombre">
+    <input type="text" name="surname" placeholder="Apellido">
+    <input type="text" name="age" placeholder="Edad">
+    <input type="text" name="grade" placeholder="Nota">
+    <input type="submit" value="Nuevo alumno">
+  </form>
   <table>
     <thead>
       <th>id</th>
@@ -15,15 +23,9 @@
       <th>surname</th>
       <th>age</th>
       <th>grade</th>
+      <th>actions</th>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
       <!-- esto sale de la base de datos -->
     </tbody>
   </table>
