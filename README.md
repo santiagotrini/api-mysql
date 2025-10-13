@@ -67,3 +67,20 @@ echo node_modules > .gitignore
 ```
 
 En el raíz del proyecto.
+
+## Cómo clonar e instalar esto localmente
+
+Muy fácil, ejecutar estos comandos en una terminal, da lo mismo Windows o Linux. Asegurarse antes de arrancar que este corriendo el servidor de MySQL y de tener instalados Git, NodeJS y npm.
+
+```console
+$ git clone https://github.com/santiagotrini/api-mysql
+$ cd api-mysql
+$ code .
+$ mysql < db_schema.sql
+$ mysql < db_data.sql
+$ cd server
+$ npm install
+$ npm start
+```
+
+Ejecuten el servidor de desarrollo (el *Live server*) desde VS Code para ver el cliente. Naveguen hasta `client/index.html`.
