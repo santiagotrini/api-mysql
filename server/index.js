@@ -18,10 +18,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 // conectarse a mysql usando el driver de npm
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: '',
-  password: '',
-  database: 'school'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT
 });
 // dale conectate nomás
 connection.connect();
