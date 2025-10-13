@@ -1,5 +1,6 @@
 
 const url = 'http://localhost:3000/api/students';
+updateTable();
 function updateTable() {
   fetch(url)
   .then(res => res.json())
@@ -15,16 +16,18 @@ function updateTable() {
       }
       let actions = document.createElement('td');
       let editBtn = document.createElement('button');
-      let ie = document.createElement('i');
-      ie.classList.add('fa-solid');
-      ie.classList.add('fa-pencil');
-      editBtn.append(ie);
+      editBtn.textContent = 'E';
+      //let ie = document.createElement('i');
+      //ie.classList.add('fa-solid');
+      //ie.classList.add('fa-pencil');
+      //editBtn.append(ie);
       editBtn.onclick = editRow;
       let removeBtn = document.createElement('button');
-      let ir = document.createElement('i');
-      ir.classList.add('fa-solid');
-      ir.classList.add('fa-trash');
-      removeBtn.append(ir);
+      removeBtn.textContent = 'X';
+      //let ir = document.createElement('i');
+      //ir.classList.add('fa-solid');
+      //ir.classList.add('fa-trash');
+      //removeBtn.append(ir);
       removeBtn.dataset.studentId = student.id;
       removeBtn.onclick = removeRow;
       actions.append(editBtn, removeBtn);
@@ -60,8 +63,36 @@ function handleSubmit(event) {
   form.reset();
 }  
 
-function editRow() {
-
+function editRow(e) {
+  let btn = e.target;
+  let row = e.target.parentElement.parentElement;
+  if (btn.textContent == 'E') {
+    let i = 1;
+    while (i < row.children.length - 1) {
+      row.children[i].contentEditable = true;
+      i++;
+    }
+    row.children[i].children[0].textContent = 'G';
+  } else {
+    let data = {
+      name: row.children[1].textContent,
+      surname: row.children[2].textContent,
+      age: row.children[3].textContent,
+      grade: row.children[4].textContent,
+    };
+    const options = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    };
+    const id = row.children[0].textContent;
+    fetch(url+'/'+id, options)
+      .then(res => res.json())
+      .then(data => {
+        updateTable();
+      })
+      .catch(err => console.error(err));
+  }
 }
 
 function removeRow(e) {

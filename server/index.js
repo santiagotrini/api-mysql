@@ -59,6 +59,18 @@ app.delete('/api/students/:id', (req, res) => {
   });
 });
 
+// esta ruta sirve para modificar una fila de students
+// PUT /api/students/id
+app.put('/api/students/:id', (req, res) => {
+  let id = req.params.id;
+  const { name, surname, age, grade } = req.body;
+  const data = [name, surname, age, grade, id];
+  const query = 'UPDATE students SET name = ?, surname = ?, age = ?, grade = ? WHERE id = ?';
+  connection.query(query, data, (err, rs) => {
+    res.status(200).json({ msg: 'Update OK' });
+  });
+});
+
 
 // escucha peticiones que seguro que alguien
 // va a pedirte algo
