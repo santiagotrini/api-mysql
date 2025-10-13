@@ -4,6 +4,10 @@ const mysql   = require('mysql');
 const cors    = require('cors') ;
 const morgan  = require('morgan') ;
 
+// config vars
+const PORT = process.env.PORT || 3000;
+
+
 // creo el objeto app
 const app = express();
 // vamos a usar cors en toda la app
@@ -74,6 +78,6 @@ app.put('/api/students/:id', (req, res) => {
 
 // escucha peticiones que seguro que alguien
 // va a pedirte algo
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('Server andando nomás en el puerto 3000');
 });
