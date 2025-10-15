@@ -18,14 +18,12 @@ app.use(morgan('dev'));
 app.use(express.json());
 // conectarse a mysql usando el driver de npm
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT
-});
+  host: 'localhost',
+  user: 'root',
+  database: 'school'
+}); // mysql -h localhost -u root school
 // dale conectate nomás
-connection.connect();
+connection.connect(() => console.log('Base de datos conectada'));
 
 // la ruta que nos interesa para nuestra API
 // por ahora, una que me de todos los alumnos
