@@ -78,5 +78,5 @@ app.put('/api/students/:id', (req, res) => {
 // escucha peticiones que seguro que alguien
 // va a pedirte algo
 app.listen(PORT, () => {
-  console.log('Server andando nomás en el puerto 3000');
+  console.log('Server andando nomás en el puerto ' + PORT);
 });
