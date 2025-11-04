@@ -19,7 +19,7 @@ app.use(express.json());
 // conectarse a mysql usando el driver de npm
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
+  // user: 'root',
   database: 'school'
 }); // mysql -h localhost -u root school
 // dale conectate nomás
@@ -31,7 +31,19 @@ connection.connect(() => console.log('Base de datos conectada'));
 // y le pasamos el resultado al cliente pero en formato JSON
 // GET /api/students
 app.get('/api/students', (req, res) => {
-  connection.query('SELECT * FROM students', (err, rs) => {
+  // console.log(req.query);
+  let qs = '';
+  if (Object.keys(req.query).length > 0) {
+    qs = 'SELECT * FROM students WHERE ';
+    for (let key in req.query) {
+      if (req.query[key]) qs += `${key}='${req.query[key]}' AND `;
+    }
+    qs = qs.slice(0,-4);
+    // console.log(qs);
+  } else {
+    qs = 'SELECT * FROM students';
+  }
+  connection.query(qs, (err, rs) => {
     res.status(200).json(rs);
   });
 });

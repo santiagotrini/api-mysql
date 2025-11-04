@@ -1,7 +1,7 @@
 
-const url = 'http://localhost:3000/api/students';
-updateTable();
-function updateTable() {
+const baseUrl = 'http://localhost:3000/api/students';
+updateTable(baseUrl);
+function updateTable(url) {
   fetch(url)
   .then(res => res.json())
   .then(data => {
@@ -39,27 +39,46 @@ function updateTable() {
   
 function handleSubmit(event) {
   event.preventDefault();
+  console.log(event.submitter.value); // que boton clickeaste
   let form = event.target;
-  let data = {
-    name: form.name.value,
-    surname: form.surname.value,
-    age: +form.age.value,
-    grade: form.grade.value,
-  };
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  };
-  // hacer la peticion a nuestra API
-  fetch(url, options)
-    .then(res => res.json())
-    .then(newStudent => {
-      updateTable(); 
-    })
-    .catch(err => console.error(err));
+  if (event.submitter.value == 'Nuevo alumno') {
+    let data = {
+      name: form.name.value,
+      surname: form.surname.value,
+      age: +form.age.value,
+      grade: form.grade.value,
+    };
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    };
+    // hacer la peticion a nuestra API
+    fetch(baseUrl, options)
+      .then(res => res.json())
+      .then(newStudent => {
+        updateTable(baseUrl); 
+      })
+      .catch(err => console.error(err));
+  } else if (event.submitter.value == 'Filtrar') {
+    // updateTable(otraUrl)
+    const filters = {
+      name: form.name.value,
+      surname: form.surname.value,
+      age: form.age.value,
+      grade: form.grade.value
+    };
+    console.log(filters);
+    let url = baseUrl + '?'
+    for (let key in filters) {
+      if (filters[key]) url += `${key}=${filters[key]}&`;
+    }
+    url = url.slice(0,-1);
+    console.log(url);
+    updateTable(url);
+  }
   form.reset();
 }  
 
@@ -86,10 +105,10 @@ function editRow(e) {
       body: JSON.stringify(data)
     };
     const id = row.children[0].textContent;
-    fetch(url+'/'+id, options)
+    fetch(baseUrl+'/'+id, options)
       .then(res => res.json())
       .then(data => {
-        updateTable();
+        updateTable(baseUrl);
       })
       .catch(err => console.error(err));
   }
@@ -102,9 +121,9 @@ function removeRow(e) {
   const options = {
     method: 'DELETE'
   };
-  fetch(url + '/' + id, options)
+  fetch(baseUrl + '/' + id, options)
     .then(res => res.json())
     .then(data => {
-      updateTable();
+      updateTable(baseUrl);
     });
 }
